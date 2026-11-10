@@ -1,0 +1,395 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #000000;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px black;
+}
+
+.menu {
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li {
+  position: relative;
+}
+
+/* Estilo dos links */
+.menu ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 15px;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Efeito de hover */
+.menu ul li a:hover {
+  color: #9e1010;
+}
+
+/* Animação de sublinhado ao passar o mouse */
+.menu ul li::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background-color: #9e1010;
+  bottom: -5px;
+  left: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.menu ul li:hover::after {
+  width: 100%;
+}
+
+header {
+  background: #000000;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between; /* Mantém os itens afastados */
+  align-items: center; /* Centraliza verticalmente */
+  height: 70px; /* Ajuste conforme necessário */
+}
+
+h1 {
+  font-size: 20px;
+  margin: 50px; /* Remove margens padrão */
+  text-align: center; /* Apenas garante centralização do texto dentro do h1 */
+}
+.explore-button {
+  color: #ffffff;
+  border-color: #f4f4f4 10px;
+  padding: 10px 20px;
+  border: #f4f4f4 2px solid;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  opacity: 0; /* Inicialmente invisível */
+  transform: translateY(30px); /* Inicialmente um pouco abaixo */
+  animation: fadeUpButton 1.5s ease-out forwards;
+  animation-delay: 1s; /* A animação do botão começa depois de 1 segundo */
+}
+
+.explore-button:hover {
+  background-color: #eeeeeece;
+  color: #000000;
+}
+
+/* Estilo do título */
+.welcome-section h2 {
+  padding: 160px;
+  font-size: 56px;
+  margin-bottom: 10px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  opacity: 0; /* Inicialmente invisível */
+  transform: translateY(30px); /* Inicialmente um pouco abaixo */
+  animation: fadeUp 1.5s ease-out forwards;
+  animation-delay: 0.2s; /* A animação do título começa após 0.2 segundos */
+}
+
+/* Estilo do parágrafo */
+.welcome-section p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  opacity: 0; /* Inicialmente invisível */
+  transform: translateY(30px); /* Inicialmente um pouco abaixo */
+  animation: fadeUp 1.5s ease-out forwards;
+  animation-delay: 0.6s; /* A animação do parágrafo começa após 0.6 segundos */
+}
+
+/* Estilo da div */
+.welcome-section {
+  position: relative;
+  width: 100%;
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background-size: cover;
+}
+
+/* Imagem de fundo */
+.welcome-section img {
+  background-image: url('Início-Boas-vindas-1.png');
+  filter: blur(0px);
+  background-position: center;
+  width: 100%;
+  height: 110%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Animação do título e parágrafo subindo */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animação do botão subindo */
+@keyframes fadeUpButton {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+footer {
+  background: #000000;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+
+/*SERVIÇO*/
+
+
+.services-section {
+  position: relative;
+  padding: 40px;
+  margin: 10px;
+}
+.services-section h2 {
+  font-size: 90px;
+  margin-bottom: 20px;
+  padding: 30px;
+}
+.services-section h4 {
+  margin-top: 15px;
+  font-size: 23px;
+  font-weight: 100;
+}
+.services-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 15px;
+}
+.service-card {
+  background-color: #72717100;
+  width: 400px;
+  height: 480px;
+  border:#f4f4f4 2px solid;
+}
+.swiper {
+  width: 100%;
+  height: 60%;
+}
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/*Sobre Nós*/
+
+.sobre-nos {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.titulo {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  padding: 10px 20px;
+
+  font-weight: bold;
+  font-size: 90px;
+  margin-bottom: 20px;
+}
+
+.missao {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.texto {
+  position: absolute;
+  top: 55%;
+  left: 30%;
+  width: 40%;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.imagem {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.img1 {
+  top: 50%;
+  left: 5%;
+  background-image: url('fundo-teste.jpg'); /* Substituir pela URL da imagem */
+}
+
+.img2 {
+  top: 5%;
+  right: 5%;
+  background-image: url('fundo-teste2.jpg'); /* Substituir pela URL da imagem */
+}
+
+.sobre-button {
+  color: #ffffff;
+  border-color: #f4f4f4 10px;
+  padding: 10px 20px;
+  border: #f4f4f4 2px solid;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sobre-button:hover {
+  background-color: #eeeeeece;
+  color: #000000;
+}
+
+
+
+
+
+
+.explore-button1 {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 10px 15px ;
+  font-size: 10px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.explore-button1:hover {
+  background-color: #cfcfcf;
+}
+
+h4, p, .explore-button1{
+    margin-left: 25px;
+}
+
+.barra-1{
+  background-color: #ffffff;
+  width: 80%;
+  height: 2px;
+  border-radius: 20px;
+  margin: 10px;
+  display: flex;
+}
+
+#icone{
+  width: 30px;
+  height: 30px;
+}
+
+.barra-2{
+  background-color: #ffffff;
+  width: 90%;
+  height: 1px;
+  border-radius: 20px;
+  margin: 10px;
+  display: flex;
+}
+
+.post-inteiro{
+    margin-left: 22%;
+    
+}
+
+.post-container {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-self: center;
+  border: 1px #ffffff solid;
+  color: #fff;
+  margin: 30px;
+  width: 1100px;
+  height: 100%;
+}
+.post-image img {
+  width: 310px;
+  height: 300px;
+  object-fit: cover;
+  margin: 10px;
+}
+.post-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.author {
+  font-weight: bold;
+}
+.date {
+  color: gray;
+  font-size: 14px;
+}
+.post-container h2 {
+  padding-left: 23px;
+  font-size: 30px;
+}
+.description {
+  color: lightgray;
+  font-size: 16px;
+
+}
+.post-footer {
+  margin-top: 10px;
+  color: gray;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagvagas{
+  background-color: rgba(0, 0, 0, 0.3);
+  display: grid;
+  padding: 30px;
+  margin: 30px;
+  border-radius: 20px;
+}
