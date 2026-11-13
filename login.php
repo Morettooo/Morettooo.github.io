@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - CLTEC</title>
+  <style>
+    body{
+      margin: 0px;
+    }
+
+    :root {
+  --red-1: #d10d0d;
+  --red-2: #b00606;
+  --bg: #ffffff;
+}
+
+/* Container geral da página de login */
+.login-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Painel esquerdo */
+.login-left {
+  flex: 1;
+  background: linear-gradient(120deg, #DC143C, var(--red-1), var(--red-2));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 22px;
+}
+
+.login-left .login-logo {
+  width: 330px;
+  height: 350px;
+  margin-bottom: 20px;
+  margin-left: 60px;
+}
+
+/* Painel direito */
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+/* Borda moderna */
+.login-border {
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+  padding: 40px;
+  border-radius: 10px;
+  width: 327px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caixa de conteúdo */
+.login-box {
+  width: 100%;
+  text-align: center;
+  color: #292929;
+}
+
+/* Títulos */
+.login-box h2 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  text-align: center;
+}
+
+.login-box p.lead {
+  margin: 0 0 18px 0;
+  font-size: 14px;
+  text-align: center;
+  color: #555;
+}
+
+/* Inputs */
+.login-input-group {
+  position: relative;
+  margin: 30px 0;
+}
+
+.login-input-group input {
+  width: 100%;
+  padding: 10px 10px 10px 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid #555;
+  color: #000;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.login-input-group label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  color: #aaa;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.login-input-group input:focus + label,
+.login-input-group input:valid + label {
+  top: -20px;
+  font-size: 12px;
+  color: var(--red-1);
+}
+
+.login-input-group input:focus {
+  border-bottom: 2px solid var(--red-1);
+}
+
+/* Botão */
+.login-btn {
+  display: inline-block;
+  padding: 10px 25px;
+  color: #fff;
+  text-transform: uppercase;
+  border: none;
+  background: linear-gradient(90deg, var(--red-1), var(--red-2));
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  font-weight: 700;
+}
+
+.login-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Link para cadastro */
+.login-signup-link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-signup-link a {
+  color: #00f0ff;
+  text-decoration: none;
+}
+
+.login-signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Login com Google */
+.login-social {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-social .login-google-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: #444;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.login-social .login-google-btn:hover {
+  background: #f5f5f5;
+}
+
+.login-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .login-left .login-logo {
+    width: 290px;
+    margin: 0 auto;
+  }
+
+  .login-border {
+    width: 90%;
+    padding: 50px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <!-- Lado esquerdo -->
+    <div class="login-left">
+      <img src="../image/div-esquerda.png" alt="Logo CLTEC" class="login-logo">
+    </div>
+
+    <!-- Lado direito -->
+    <div class="login-right">
+      <div class="login-border">
+        <div class="login-box">
+          <h2>Entrar</h2>
+
+          <form id="loginForm" action="testeLogin.php" method="POST">
+            <div class="login-input-group">
+              <input type="email" name="email" required>
+              <label>Email</label>
+            </div>
+
+            <div class="login-input-group">
+              <input type="password" name="senha" required>
+              <label>Senha</label>
+            </div>
+
+            <input type="submit" value="Enviar" name="submit" class="login-btn">
+
+            <div class="login-social"></div>
+          </form>
+
+          <p class="login-signup-link">
+            Não tem conta?
+            <a href="cadastro.php">Cadastre-se</a>
+          </p>
+
+          <div class="login-social" aria-hidden="true">
+            <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=628776784834-k9ajjkegimqf2cm11s4hlime2k7jk0dp.apps.googleusercontent.com&redirect_uri=http://localhost:8080/moretto/sistema/php/callback_google.php&response_type=code&scope=openid%20email%20profile&access_type=offline&prompt=consent"
+              class="login-google-btn">
+              <img src="../image/logo-google.png" alt="Google" class="login-icon"> Google
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

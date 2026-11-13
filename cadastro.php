@@ -1,0 +1,351 @@
+<?php
+include("config.php");
+
+if (isset($_POST['submit'])) {
+    $nome     = $_POST['nome'];
+    $email    = $_POST['email'];
+    $telefone = $_POST['telefone'];
+    $senha    = $_POST['senha'];
+    $confirmarSenha = $_POST['confirmar_senha'];
+
+    if ($senha !== $confirmarSenha) {
+        echo "<script>
+                alert('As senhas não coincidem!');
+                window.history.back();
+              </script>";
+        exit;
+    }
+
+    $checkEmail = $conexao->prepare("SELECT id FROM usuarios WHERE email = ?");
+    $checkEmail->bind_param("s", $email);
+    $checkEmail->execute();
+    $checkEmail->store_result();
+
+    if ($checkEmail->num_rows > 0) {
+        echo "<script>
+                alert('E-mail já cadastrado!');
+                window.history.back();
+              </script>";
+        exit;
+    }
+    $checkEmail->close();
+
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO usuarios (nome, email, telefone, senha) VALUES (?, ?, ?, ?)";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("ssss", $nome, $email, $telefone, $senha_hash);
+
+    if ($stmt->execute()) {
+        echo "<script>
+                alert('Cadastro realizado com sucesso!');
+                window.location=\"login.php\";
+              </script>";
+    } else {
+        echo "Erro: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conexao->close();
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cadastro - CLTEC</title>
+  <style>
+    /* Fonte: usa sistema (sem dependências externas) */
+    :root{
+      --red-1:#d10d0d;
+      --red-2:#b00606;
+      --accent:#e0094a;
+      --bg:#ffffff;
+      --text:#222;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--text); background:#fafafa}
+
+    /* Container principal - mesma divisão do login */
+    .container {
+      min-height:100vh;
+      display:flex;
+    }
+
+    /* LADO ESQUERDO - painel vermelho */
+    .left-side{
+      flex:1;
+      padding:48px;
+      background: linear-gradient(120deg, #DC143C, var(--red-1), var(--red-2));
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:flex-start;
+      gap:18px;
+    }
+      .left-side .logo {
+  width: 370px;
+  height: 380px;
+  margin-bottom: 20px;
+  margin-left :90px;
+}
+
+    /* LADO DIREITO - area do form */
+    .right-side{
+      flex:1;
+      background:var(--bg);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 0px;
+    }
+
+    /* bordas desgovernadas estilo login */
+    .login-border{
+      position:relative;
+      width:520px;
+      max-width:92%;
+      padding:14px;
+      background: #fff;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+   
+
+    /* Conteúdo do formulário */
+    .login-box{
+      width:100%;
+      max-width:420px;
+      z-index:1;
+    }
+    .login-box h2{
+      margin:0 0 8px 0;
+      font-size:22px;
+      text-align:center;
+    }
+    .login-box p.lead{
+      margin:0 0 18px 0;
+      font-size:14px;
+      text-align:center;
+      color:#555;
+    }
+
+    /* input-group (igual ao login) */
+    .input-group{
+      position:relative;
+      margin:18px 0;
+    }
+    .input-group input{
+      width:100%;
+      padding:12px 8px 12px 0;
+      background:none;
+      border:none;
+      border-bottom:2px solid #cfcfcf;
+      outline:none;
+      font-size:15px;
+      color:#111;
+      transition:0.18s;
+    }
+    .input-group label{
+      position:absolute;
+      left:0;
+      top:10px;
+      color:#9b9b9b;
+      pointer-events:none;
+      transition:0.18s;
+      font-size:14px;
+    }
+    /* quando focar ou estiver preenchido */
+    .input-group input:focus{ border-bottom-color:var(--red-1) }
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label{
+      top:-18px;
+      font-size:12px;
+      color:var(--red-1);
+    }
+
+    /* botão */
+    .btn{
+      display:inline-block;
+      width:100%;
+      padding:12px 18px;
+      border-radius:50px;
+      border:none;
+      color:#fff;
+      background: linear-gradient(90deg, var(--red-1), var(--red-2));
+      font-weight:700;
+      text-transform:uppercase;
+      cursor:pointer;
+      margin-top:6px;
+      transition:transform .18s;
+    }
+    .btn:hover{ transform:scale(1.03) }
+
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .remember{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      color:#555;
+      margin-top:8px;
+    }
+
+    .social-login{
+      margin-top:18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+    }
+    .google-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:8px;
+      border:1px solid #ddd;
+      background:#fff;
+      color:#333;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .google-btn svg{width:18px;height:18px}
+
+    /* mensagem PHP */
+    .msg{
+      text-align:center;
+      margin:12px 0 0 0;
+      font-weight:600;
+      color:#b30;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 960px){
+      .container{flex-direction:column}
+      .left-side{padding:28px;align-items:center;text-align:center}
+      .left-brand{font-size:40px}
+      .login-border{width:90%; padding:28px}
+      .login-box h2{font-size:20px}
+    }
+    @media (max-width:420px){
+      .left-brand{font-size:30px}
+      .left-sub{font-size:14px}
+      .login-border{padding:18px}
+      .input-group{margin:14px 0}
+    }
+    .icon{
+  width: 25px;
+  height: 25px;
+}
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="left-side">
+     <img src="../image/div-esquerda.png" id="logo" alt="">
+      </ul>
+    </div>
+
+<br>
+    <div class="right-side">
+      <div class="login-border" role="region" aria-label="Cadastro">
+        <span class="border-3"></span>
+
+        <div class="login-box">
+          <h2>Insira seus dados para cadastro</h2>
+          <p class="lead">Após inserir os seus dados, clique em ENVIAR.</p>
+
+
+
+          <?php if(!empty($mensagem)): ?>
+            <div class="msg"><?=htmlspecialchars($mensagem)?></div>
+          <?php endif; ?>
+
+          <form action="" method="post" autocomplete="off">
+            <div class="input-group">
+              <input type="text" name="nome" id="nome" required placeholder=" " />
+              <label for="nome">Nome</label>
+            </div>
+
+            <div class="input-group">
+              <input type="email" name="email" id="email" required placeholder=" " />
+              <label for="email">Email</label>
+            </div>
+
+            <div class="input-group">
+              <input type="password" name="senha" id="senha" required placeholder=" " />
+              <label for="senha">Senha</label>
+              <span class="toggle" onclick="togglePassword('senha', this)" style="position:absolute;right:6px;top:10px;cursor:pointer;">👁️</span>
+            </div>
+
+            <div class="input-group">
+              <input type="password" name="confirmar_senha" id="confirmar_senha" required placeholder=" " />
+              <label for="confirmar_senha">Confirmar Senha</label>
+              <span class="toggle" onclick="togglePassword('confirmar_senha', this)" style="position:absolute;right:6px;top:10px;cursor:pointer;">👁️</span>
+            </div>
+
+            <div class="input-group">
+              <input type="text" name="telefone" id="telefone" maxlength="15" required placeholder=" " />
+              <label for="telefone">Telefone</label>
+            </div>
+
+            <div class="remember">
+              <input type="checkbox" id="lembrar" name="lembrar" />
+              <label for="lembrar">Lembrar</label>
+            </div>
+
+            <button type="submit" class="btn" name="submit">Enviar</button>
+
+            <div class="social-login" aria-hidden="true">
+             <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=628776784834-k9ajjkegimqf2cm11s4hlime2k7jk0dp.apps.googleusercontent.com&redirect_uri=http://localhost:8080/moretto/sistema/php/callback_google.php&response_type=code&scope=openid%20email%20profile&access_type=offline&prompt=consent" class="google-btn">
+                <img src="../image/logo-google.png" alt="Google" class="icon"> Google
+              </a>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Toggle visibilidade da senha
+  function togglePassword(id, el){
+    const input = document.getElementById(id);
+    if(!input) return;
+    if(input.type === "password"){ input.type = "text"; el.textContent="🙈"; }
+    else { input.type = "password"; el.textContent="👁️"; }
+  }
+
+  // Máscara telefone simples
+  const telefone = document.getElementById('telefone');
+  if(telefone){
+    telefone.addEventListener('input', function(e){
+      let v = e.target.value.replace(/\D/g,'').slice(0,11);
+      if(v.length <= 10){
+        e.target.value = v.replace(/^(\d{2})(\d{0,4})(\d{0,4})$/,"($1)$2-$3").replace(/-$/,"");
+      } else {
+        e.target.value = v.replace(/^(\d{2})(\d{5})(\d{0,4})$/,"($1)$2-$3");
+      }
+    });
+  }
+
+
+</script>
+
+</body>
+</html>
